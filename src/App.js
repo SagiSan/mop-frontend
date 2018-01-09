@@ -5,10 +5,20 @@ import "./App.css";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { testFunc } from "./reducers/testReducer";
-
+import Question from "./components/Question/Question";
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      type: ""
+    };
+  }
+
+  chooseType = type => {
+    console.log(type);
+    this.setState({ type });
+  };
   render() {
-    console.log(this.props.test);
     return (
       <div className="App">
         <header className="App-header">
@@ -18,7 +28,38 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <button onClick={() => this.props.testFunc()}>{this.props.test}</button>
+        <br />
+        <div>
+          <button
+            onClick={() => {
+              this.chooseType("text");
+            }}
+          >
+            Text
+          </button>
+          <button
+            onClick={() => {
+              this.chooseType("yes/no");
+            }}
+          >
+            Yes / No
+          </button>
+          <button
+            onClick={() => {
+              this.chooseType("multiple");
+            }}
+          >
+            Multiple
+          </button>
+          <button
+            onClick={() => {
+              this.chooseType("single");
+            }}
+          >
+            Single Choice
+          </button>
+        </div>
+        <Question type={this.state.type} />
       </div>
     );
   }
