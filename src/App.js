@@ -4,8 +4,13 @@ import "./App.css";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { testFunc } from "./reducers/testReducer";
+
+import Home from "./components/Home/Home";
 import Question from "./components/Question/Question";
+import Questionnaire from "./components/Questionnaire/Questionnaire";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +20,6 @@ class App extends Component {
   }
 
   chooseType = type => {
-    console.log(type);
     this.setState({ type });
   };
   render() {
@@ -25,11 +29,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <br />
-        <div>
+        {/*         <div>
           <button
             onClick={() => {
               this.chooseType("text");
@@ -58,8 +58,15 @@ class App extends Component {
           >
             Single Choice
           </button>
-        </div>
-        <Question type={this.state.type} />
+        </div> */}
+        <Router>
+          <div>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/questionnaire/:id" component={Questionnaire} />
+            <div />
+          </div>
+        </Router>
       </div>
     );
   }
