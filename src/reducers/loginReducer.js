@@ -8,7 +8,12 @@ export default function reducer(state = initialState, action) {
         ...state,
         user: action.payload
       };
-    case "ADD_USER":
+    case "ADD_USER_FULFILLED":
+      return {
+        ...state,
+        user: action.payload
+      };
+    case "ADD_USER_REJECTED":
       return {
         ...state,
         user: action.payload
@@ -17,14 +22,23 @@ export default function reducer(state = initialState, action) {
       return state;
   }
 }
+
 export function getUser(name, surname, email) {
+  console.log(name, surname, email);
   return {
-    type: "GET_USER",
-    payload: fetch("localhost:3000/api/user/register", {
+    type: "ADD_USER",
+    payload: fetch("http://localhost:3000/api/user/register", {
       method: "post",
+      /*       mode: "no-cors",
+ */ headers: {
+        "content-type": "application/json"
+      },
       body: JSON.stringify({ name: name, surname: surname, email: email })
-    }).then(res => {
-      console.log(res);
+    }).then(function(response) {
+      return response.json();
     })
+    /*      .catch(err => {
+        console.log(err);
+      }) */
   };
 }
