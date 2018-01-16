@@ -1,0 +1,29 @@
+.login {
+  display: flex;
+  justify-content: space-between;
+  flex-basis: 2;
+  padding: 2em;
+  width: 40%;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+form {
+  width: 100%;
+}
+label {
+  color: #ed202e !important;
+}
+.login-input {
+  padding: 1.5em !important;
+}
+.login-btn {
+  background-color: #e81220 !important;
+  color: #fff !important;
+  width: 100%;
+  margin-top: 2em !important;
+  padding: 2em !important;
+  border-radius: 0 !important;
+}

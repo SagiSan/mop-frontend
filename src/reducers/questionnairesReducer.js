@@ -3,6 +3,11 @@ const initialState = {
 };
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+    case "GET_QUESTIONNAIRES":
+      return {
+        ...state,
+        questionnaires: action.payload
+      };
     case "ADD_QUESTIONNAIRE":
       return {
         ...state,
@@ -17,7 +22,12 @@ export default function reducer(state = initialState, action) {
       return state;
   }
 }
-
+export function getQuestionnaires() {
+  return {
+    type: "GET_QUESTIONNAIRES",
+    payload: fetch("localhost:3000/api/questionnaire")
+  };
+}
 export function testFunc() {
   return {
     type: "TEST",

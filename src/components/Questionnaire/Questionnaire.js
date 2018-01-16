@@ -47,6 +47,8 @@ export default class Questionnaire extends Component {
         >
           {showQuestion ? "Cancel question" : "Add Question"}
         </Button>
+        <Divider hidden />
+        <Button className="submit-btn">Submit</Button>
       </div>
     );
   }

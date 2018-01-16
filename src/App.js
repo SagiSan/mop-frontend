@@ -4,12 +4,18 @@ import "./App.css";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect
+} from "react-router-dom";
 import { testFunc } from "./reducers/testReducer";
 
 import Home from "./components/Home/Home";
 import Question from "./components/Question/Question";
 import Questionnaire from "./components/Questionnaire/Questionnaire";
+import Login from "./components/Login/Login";
 
 class App extends Component {
   constructor(props) {
@@ -22,12 +28,30 @@ class App extends Component {
   chooseType = type => {
     this.setState({ type });
   };
+
   render() {
+    const PrivateRoute = ({ component: Component, ...rest }) => (
+      <Route
+        {...rest}
+        render={props =>
+          localStorage.getItem("token") ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: props.location }
+              }}
+            />
+          )
+        }
+      />
+    );
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Welcome to Mop</h1>
         </header>
         {/*         <div>
           <button
@@ -61,9 +85,12 @@ class App extends Component {
         </div> */}
         <Router>
           <div>
+            {/* <PrivateRoute exact path="/" component={Home} />
+            <PrivateRoute exact path="/home" component={Home} /> */}
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />
             <Route exact path="/questionnaire/:id" component={Questionnaire} />
+            <Route exact path="/login" component={Login} />
             <div />
           </div>
         </Router>
