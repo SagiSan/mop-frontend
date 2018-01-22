@@ -4,3 +4,7 @@
 .checkbox {
   margin-right: 10px;
 }
+.question-container {
+  display: block;
+  margin: 2em;
+}

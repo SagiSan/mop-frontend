@@ -24,7 +24,15 @@ class Question extends Component {
   handleChange = (e, { value }) => this.setState({ radioValue: value });
   handleSubmit = () => {
     const { type, question, answers } = this.state;
-    this.props.addQuestion({ type, question, choices: answers });
+    this.props.addQuestion({
+      type,
+      question,
+      choices: answers.map(answer => {
+        return {
+          choice: answer
+        };
+      })
+    });
     this.setState({ question: "", type: "", answers: [] });
   };
   render() {

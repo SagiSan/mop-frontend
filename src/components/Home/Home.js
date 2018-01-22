@@ -2,14 +2,31 @@ import React, { Component } from "react";
 import "./Home.css";
 import { Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getQuestionnaires } from "../../reducers/questionnairesReducer";
 
-export default class Home extends Component {
+class Home extends Component {
+  constructor(props) {
+    super(props);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.loaded) {
+      this.props.getQuestionnaires();
+    }
+  }
+  componentWillMount() {
+    this.props.getQuestionnaires();
+    console.log("home");
+  }
   render() {
     const admin = true;
     const list = [1, 2, 3, 4];
-    const questList = list.map(quest => {
-      return <div key={quest}>questionnaire {quest}</div>;
-    });
+    const questList =
+      this.props.questionnaires &&
+      this.props.questionnaires.map((quest, index) => {
+        return <div key={index}>{quest.title}</div>;
+      });
     return (
       <div className="home">
         {questList}
@@ -23,3 +40,15 @@ export default class Home extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    questionnaires: state.questionnaires.questionnaires,
+    loaded: state.questionnaires.loaded
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ getQuestionnaires }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -5,6 +5,7 @@ import CreateQuestion from "../CreateQuestion/CreateQuestion";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Question from "../Question/Question";
+import { createQuestionnaire } from "../../reducers/questionnairesReducer";
 
 class Questionnaire extends Component {
   constructor(props) {
@@ -20,8 +21,16 @@ class Questionnaire extends Component {
   componentWillMount() {
     this.setState({ id: this.props.match.params.id });
   }
+  submitQuestionnaire = () => {
+    console.log("submit");
+    let questionnaire = {
+      title: this.state.title,
+      questions: this.props.questions
+    };
+    this.props.createQuestionnaire(questionnaire);
+    this.props.history.push("/home");
+  };
   render() {
-    console.log(this.props.questions);
     const { id, title, showQuestion } = this.state;
     const serverQuestionnaire = {
       id: "3",
@@ -42,8 +51,8 @@ class Questionnaire extends Component {
           onChange={e => this.setState({ title: e.target.value })}
         />
         <Divider hidden />
-        <Form>
-          <Form.Group>{questions}</Form.Group>
+        <Form className="center-items">
+          <Form.Group className="flex-column">{questions}</Form.Group>
         </Form>
         <Divider hidden />
         {showQuestion && <CreateQuestion />}
@@ -61,7 +70,12 @@ class Questionnaire extends Component {
           {showQuestion ? "Cancel question" : "Add Question"}
         </Button>
         <Divider hidden />
-        <Button className="submit-btn">Submit</Button>
+        <Button
+          className="submit-btn"
+          onClick={() => this.submitQuestionnaire()}
+        >
+          Submit
+        </Button>
       </div>
     );
   }
@@ -71,8 +85,8 @@ const mapStateToProps = state => {
     questions: state.questionnaires.createQuestionnaire.questions
   };
 };
-/* const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ addQuestion }, dispatch);
-}; */
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ createQuestionnaire }, dispatch);
+};
 
-export default connect(mapStateToProps)(Questionnaire);
+export default connect(mapStateToProps, mapDispatchToProps)(Questionnaire);

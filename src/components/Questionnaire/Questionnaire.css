@@ -30,3 +30,13 @@ input:-ms-input-placeholder {
   padding: 1em 2em !important;
   border-radius: 0 !important;
 }
+.center-items {
+  display: flex;
+  justify-content: center;
+}
+.flex-column {
+  flex-direction: column !important;
+  width: 60%;
+  justify-content: center;
+  align-items: center;
+}

@@ -67,9 +67,8 @@ export default class Question extends Component {
             return (
               <Radio
                 key={index}
-                label={item}
+                label={item.choice}
                 name="radioGroup"
-                value={item}
                 checked={this.state.radioValue === item}
                 onChange={this.handleRadio}
               />
@@ -80,7 +79,7 @@ export default class Question extends Component {
             return (
               <Checkbox
                 key={index}
-                label={item}
+                label={item.choice}
                 checked={answersCheck[index].checked}
                 onChange={() => this.updateAnswersChecks(index, item)}
               />
