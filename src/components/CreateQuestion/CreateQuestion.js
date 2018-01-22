@@ -91,9 +91,9 @@ class Question extends Component {
         </Form>
         <Form>
           {answers.length !== 0 &&
-            answers.map(item => {
+            answers.map((item, index) => {
               return (
-                <Form.Field key={item}>
+                <Form.Field key={index}>
                   <Radio
                     label={item}
                     name="radioGroup"

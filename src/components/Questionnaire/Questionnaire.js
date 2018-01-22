@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import "./Questionnaire.css";
-import { Input, Button, Divider } from "semantic-ui-react";
+import { Input, Button, Divider, Form, Item, Radio } from "semantic-ui-react";
 import CreateQuestion from "../CreateQuestion/CreateQuestion";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import Question from "../Question/Question";
 
 class Questionnaire extends Component {
   constructor(props) {
@@ -26,6 +27,11 @@ class Questionnaire extends Component {
       id: "3",
       title: "test"
     };
+    const questions =
+      this.props.questions.length > 0 &&
+      this.props.questions.map((question, index) => {
+        return <Question key={index} question={question} />;
+      });
     return (
       <div className="questionnaire">
         <Input
@@ -35,6 +41,10 @@ class Questionnaire extends Component {
           value={title ? title : ""}
           onChange={e => this.setState({ title: e.target.value })}
         />
+        <Divider hidden />
+        <Form>
+          <Form.Group>{questions}</Form.Group>
+        </Form>
         <Divider hidden />
         {showQuestion && <CreateQuestion />}
         <Divider hidden />
