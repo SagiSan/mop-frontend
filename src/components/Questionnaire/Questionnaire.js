@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import "./Questionnaire.css";
 import { Input, Button, Divider } from "semantic-ui-react";
-import Question from "../Question/Question";
+import CreateQuestion from "../CreateQuestion/CreateQuestion";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-export default class Questionnaire extends Component {
+class Questionnaire extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,6 +20,7 @@ export default class Questionnaire extends Component {
     this.setState({ id: this.props.match.params.id });
   }
   render() {
+    console.log(this.props.questions);
     const { id, title, showQuestion } = this.state;
     const serverQuestionnaire = {
       id: "3",
@@ -33,7 +36,7 @@ export default class Questionnaire extends Component {
           onChange={e => this.setState({ title: e.target.value })}
         />
         <Divider hidden />
-        {showQuestion && <Question />}
+        {showQuestion && <CreateQuestion />}
         <Divider hidden />
         <Button
           onClick={() =>
@@ -53,3 +56,13 @@ export default class Questionnaire extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    questions: state.questionnaires.createQuestionnaire.questions
+  };
+};
+/* const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ addQuestion }, dispatch);
+}; */
+
+export default connect(mapStateToProps)(Questionnaire);

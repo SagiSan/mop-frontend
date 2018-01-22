@@ -13,7 +13,7 @@ import {
 import { testFunc } from "./reducers/testReducer";
 
 import Home from "./components/Home/Home";
-import Question from "./components/Question/Question";
+import CreateQuestion from "./components/CreateQuestion/CreateQuestion";
 import Questionnaire from "./components/Questionnaire/Questionnaire";
 import Login from "./components/Login/Login";
 
@@ -50,8 +50,8 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to Mop</h1>
+          <img src="/mop.png" className="App-logo" alt="logo" />
+          <h1 className="App-title">Welcome to MoP Questionnaire</h1>
         </header>
         {/*         <div>
           <button
@@ -87,7 +87,7 @@ class App extends Component {
           <div>
             {/* <PrivateRoute exact path="/" component={Home} />
             <PrivateRoute exact path="/home" component={Home} /> */}
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={Login} />
             <Route exact path="/home" component={Home} />
             <Route exact path="/questionnaire/:id" component={Questionnaire} />
             <Route exact path="/login" component={Login} />

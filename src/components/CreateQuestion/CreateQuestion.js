@@ -1,8 +1,11 @@
 import React, { Component } from "react";
-import "./Question.css";
+import "./CreateQuestion.css";
 import { Dropdown, Button, Form, Item, Radio } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { addQuestion } from "../../reducers/questionnairesReducer";
 
-export default class Question extends Component {
+class Question extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +22,11 @@ export default class Question extends Component {
     this.setState({ answers: this.state.answers, currentAnswer: "" });
   };
   handleChange = (e, { value }) => this.setState({ radioValue: value });
-
+  handleSubmit = () => {
+    const { type, question, answers } = this.state;
+    this.props.addQuestion({ type, question, choices: answers });
+    this.setState({ question: "", type: "", answers: [] });
+  };
   render() {
     /* switch (this.props.type) {
       case "text":
@@ -35,14 +42,14 @@ export default class Question extends Component {
     } */
     const { type, question, currentAnswer, answers } = this.state;
     const types = [
-      { key: 1, text: "text", value: "text" },
-      { key: 2, text: "yes / no", value: "yes/no" },
-      { key: 3, text: "multiple", value: "multiple" },
-      { key: 4, text: "single", value: "single" }
+      { key: 1, text: "text", value: 0 },
+      { key: 2, text: "yes / no", value: 1 },
+      { key: 4, text: "single", value: 2 },
+      { key: 3, text: "multiple", value: 3 }
     ];
     return (
       <div className="question">
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={data => this.handleSubmit(data)}>
           <Form.Group>
             <Form.Dropdown
               placeholder="Type of question"
@@ -59,7 +66,7 @@ export default class Question extends Component {
                 onChange={e => this.setState({ question: e.target.value })}
               />
             )}
-            {(type === "multiple" || type === "single") &&
+            {(type === 3 || type === 2) &&
               question !== "" && (
                 <Form.Input
                   placeholder="Add possible answer"
@@ -69,13 +76,16 @@ export default class Question extends Component {
                   }
                 />
               )}
-            {question !== "" && (
-              <Form.Button
-                primary
-                content="Add Answer"
-                onClick={() => this.addAnswer()}
-              />
-            )}
+            {question !== "" &&
+              type !== 0 &&
+              type !== 1 && (
+                <Form.Button
+                  type="button"
+                  primary
+                  content="Add Answer"
+                  onClick={() => this.addAnswer()}
+                />
+              )}
             <Form.Button content="Submit" />
           </Form.Group>
         </Form>
@@ -99,3 +109,12 @@ export default class Question extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    test: state.test.test
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ addQuestion }, dispatch);
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Question);

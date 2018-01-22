@@ -18,8 +18,7 @@ class Login extends Component {
     e.preventDefault();
     console.log("reg");
     this.props.getUser(this.state.name, this.state.surname, this.state.email);
-    /*     this.props.history.push("/home");
- */
+    this.props.history.push("/home");
   };
   handleLogin = e => {
     e.preventDefault();
